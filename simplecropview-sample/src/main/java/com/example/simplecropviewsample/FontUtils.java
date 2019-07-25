@@ -2,7 +2,7 @@ package com.example.simplecropviewsample;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;

@@ -13,7 +13,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -224,7 +226,7 @@ public class RxFragment extends Fragment {
 
   public void dismissProgress() {
     if (!isResumed()) return;
-    android.support.v4.app.FragmentManager manager = getFragmentManager();
+    FragmentManager manager = getFragmentManager();
     if (manager == null) return;
     ProgressDialogFragment f = (ProgressDialogFragment) manager.findFragmentByTag(PROGRESS_DIALOG);
     if (f != null) {

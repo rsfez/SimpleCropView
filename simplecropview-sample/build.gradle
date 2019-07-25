@@ -40,7 +40,7 @@ dependencies {
 
   implementation "com.github.hotchemi:permissionsdispatcher:$permissionsDispatcherVersion"
   annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$permissionsDispatcherVersion"
-  implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+  implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
   implementation "com.tbruyelle.rxpermissions2:rxpermissions:$rxPermissionsVersion"
   implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
   implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
