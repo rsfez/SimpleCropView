@@ -27,6 +27,10 @@ android {
   lintOptions {
     abortOnError false
   }
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+  }
 }
 
 dependencies {
@@ -41,6 +45,7 @@ dependencies {
   implementation "com.github.hotchemi:permissionsdispatcher:$permissionsDispatcherVersion"
   annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$permissionsDispatcherVersion"
   implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
+  implementation 'androidx.core:core:1.2.0-alpha02'
   implementation "com.tbruyelle.rxpermissions2:rxpermissions:$rxPermissionsVersion"
   implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
   implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"

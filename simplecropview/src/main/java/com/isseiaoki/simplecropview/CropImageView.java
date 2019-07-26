@@ -28,7 +28,10 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.view.ViewCompat;
+
 import com.isseiaoki.simplecropview.animation.SimpleValueAnimator;
 import com.isseiaoki.simplecropview.animation.SimpleValueAnimatorListener;
 import com.isseiaoki.simplecropview.animation.ValueAnimatorV14;
@@ -37,6 +40,7 @@ import com.isseiaoki.simplecropview.callback.Callback;
 import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
+import com.isseiaoki.simplecropview.util.GestureNavigationExclusionModel;
 import com.isseiaoki.simplecropview.util.Logger;
 import com.isseiaoki.simplecropview.util.Utils;
 import io.reactivex.Completable;
@@ -55,7 +59,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@SuppressWarnings("unused") public class CropImageView extends ImageView {
+@SuppressWarnings("unused") public class CropImageView extends AppCompatImageView {
   private static final String TAG = CropImageView.class.getSimpleName();
 
   // Constants ///////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +121,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
   private AtomicBoolean mIsCropping = new AtomicBoolean(false);
   private AtomicBoolean mIsSaving = new AtomicBoolean(false);
   private ExecutorService mExecutor;
+  private GestureNavigationExclusionModel mGestureNavigationExclusionModel;
   // Instance variables for customizable attributes //////////////////////////////////////////////
 
   private TouchArea mTouchArea = TouchArea.OUT_OF_BOUNDS;
@@ -284,7 +289,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
   }
 
   @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
-    if (getDrawable() != null) setupLayout(mViewWidth, mViewHeight);
+    if (getDrawable() != null) {
+      setupLayout(mViewWidth, mViewHeight);
+      if (mGestureNavigationExclusionModel == null) mGestureNavigationExclusionModel =
+              new GestureNavigationExclusionModel(mFrameRect, mHandleSize + mTouchPadding);
+      ViewCompat.setSystemGestureExclusionRects(this,
+              mGestureNavigationExclusionModel.getExcludedRects());
+    }
   }
 
   @Override public void onDraw(Canvas canvas) {
@@ -653,6 +664,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
         break;
     }
     invalidate();
+    ViewCompat.setSystemGestureExclusionRects(this,
+            mGestureNavigationExclusionModel.getExcludedRects());
     mLastX = e.getX();
     mLastY = e.getY();
   }
